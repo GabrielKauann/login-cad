@@ -10,6 +10,14 @@
 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+    <form action="">
+        <label for="">E-mail</label>
+        <input type="text" name="email" onblur="checarEmail()">
+        <input type="submit" value="ENVIAR">
+    </form>
+    <div id="email"></div>
+    
+    <script src='email.js'></script>
     <div class="container">
         <label for="">Nome:</label>
         <input type="text" class="form-control" id="nomeUser"><br>
@@ -20,6 +28,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
         <table class="table table-striped" id="tabela">
             <tr>
                 <th>Nome Usuario</th>
+                <th>Email</th>
                 <th>Ações</th>
             </tr>
         </table>

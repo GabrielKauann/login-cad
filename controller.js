@@ -46,3 +46,17 @@ function excluir(i){
     dadosLista.splice((i - 1), 1);
     document.getElementById('tabela').deleteRow(i);
 }
+//FUNÇÃO PARA ADICIONAR EMAIL
+function checarEmail(){
+    if(document.forms[0].email.value == "" ||
+       document.forms[0].email.value.indexOf('@') == -1 ||
+       document.forms[0].email.value.indexOf('.') == -1){
+        alert("Por favor, informar um e-mail válido");
+        return false;
+    }else{
+            alert("Email informado");
+            document.getElementById('tabela').innerHTML = document.forms[0].email.value;
+            
+        }
+    }
+    
