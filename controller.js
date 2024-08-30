@@ -1,62 +1,89 @@
-// FUNÇÃO PARA VALIDAÇÃO DE ACESSO
- 
-function acessar(){
+// Função para acessar a página de cadastro após validação de login
+function acessar() {
+    // Obtém o valor dos campos de e-mail e senha
     let loginEmail = document.getElementById('loginEmail').value;
     let loginSenha = document.getElementById('loginSenha').value;
- 
-    if(!loginEmail || !loginSenha){
+   
+    // Verifica se os campos de e-mail e senha estão preenchidos
+    if (!loginEmail || !loginSenha) {
+        // Exibe um alerta se algum campo estiver vazio
         alert("Favor preencher todos os campos");
-    }else{
-        //alert("Campos preenchidos com sucesso");
-        window.location.href = 'cadastro.html';
+    } else {
+        // Redireciona para a página de cadastro se todos os campos estiverem preenchidos
+        window.location.href='cadastro.html';
     }
-}
- 
-// FUNÇÃO PARA ARMAZENAMENTO DE NOMES EM ARRAY
-var dadosLista = [];
- 
-function salvarUser(){
+  }
+   
+  // Arrays para armazenar dados dos usuários
+  var dadosLista = []; // Array para armazenar os nomes dos usuários
+  var salvaEmail = []; // Array para armazenar os e-mails dos usuários
+  var salvacpf = [];
+   
+  // Função para salvar os dados do usuário
+  function salvarUser() {
+    // Obtém o valor dos campos de nome e e-mail
     let nomeUser = document.getElementById('nomeUser').value;
-    if(nomeUser){
+    let emailUser = document.getElementById('emailUser').value;
+    let cpfUser = document.getElementById('cpfUser').value;
+   
+    // Verifica se os campos de nome e e-mail estão preenchidos
+    if (nomeUser && emailUser && cpfUser) {
+        // Adiciona o nome e o e-mail aos arrays correspondentes
         dadosLista.push(nomeUser);
-        //console.log(dadosLista);
+        salvaEmail.push(emailUser);
+        salvacpf.push(cpfUser);
+   
+        // Cria a lista atualizada na tabela
         criaLista();
+   
+        // Limpa os campos de entrada após salvar
         document.getElementById('nomeUser').value = "";
-    }else{
-        alert("Favor informe um nome para cadastro");
+        document.getElementById('emailUser').value = "";
+        document.getElementById('cpfUser').value = "";
+    } else {
+        // Exibe um alerta se algum campo estiver vazio
+        alert("Favor preencher todos campos!");
     }
-}
-// FUNÇÃO PARA CRIAR LISTA DE USUÁRIOS
-function criaLista(){
-    let tabela = document.getElementById('tabela').innerHTML = "<tr><th>Nome Usuário</th><th>Ações</th></tr>";
-    for(let i=0;i<=(dadosLista.length - 1);i++){
-        tabela += "<tr><td>" + dadosLista[i] + "</td><td><button type='button' onclick='editar(parentNode.parentNode.rowIndex)'>Editar</button><button type='button' onclick='excluir(parentNode.parentNode.rowIndex)'>Excluir</button></td></tr>";
-        document.getElementById('tabela').innerHTML = tabela;
+  }
+   
+  // Função para criar a lista na tabela
+  function criaLista() {
+    // Inicializa o conteúdo da tabela com o cabeçalho
+    let table = "<tr><th>Nome Usuário</th><th>E-mail</th><th>cpf</th><th>Ações</th></tr>";
+   
+    // Adiciona uma linha para cada usuário na lista
+    for (let i = 0; i < dadosLista.length; i++) {
+        table += "<tr><td>" + dadosLista[i] + "</td><td>" + salvaEmail[i] + "</td><td>" + salvacpf[i] + "</td></td><td><button type='button' onclick='editar()' class='btn btn-success'>Editar</button><button class='btn btn-success' id='btnaltera' type='button' onclick='excluir()'>Excluir</button></td></tr>";
     }
-}
- 
-// FUNÇÃO PARA EDITAR NOMES DE LISTA
-
-function editar(i){
-    document.getElementById('nomeUser').value = dadosLista[(i - 1)];
-    dadosLista.splice(dadosLista[(i - 1)], 1);
-}
-// FUNÇÃO PARA EXCLUIR NOME DE LISTA
-function excluir(i){
-    dadosLista.splice((i - 1), 1);
-    document.getElementById('tabela').deleteRow(i);
-}
-//FUNÇÃO PARA ADICIONAR EMAIL
-function checarEmail(){
-    if(document.forms[0].email.value == "" ||
-       document.forms[0].email.value.indexOf('@') == -1 ||
-       document.forms[0].email.value.indexOf('.') == -1){
-        alert("Por favor, informar um e-mail válido");
-        return false;
-    }else{
-            alert("Email informado");
-            document.getElementById('tabela').innerHTML = document.forms[0].email.value;
-            
-        }
-    }
-    
+   
+    // Atualiza o conteúdo da tabela com a nova lista
+    document.getElementById('table').innerHTML = table;
+  }
+   
+  // Função para editar um usuário na lista
+    function editar(){
+    // Preenche os campos de entrada com os dados do usuário selecionado
+      document.getElementById('nomeUser').value = dadosLista[(i - 1)];
+      document.getElementById('emailUser').value = salvaEmail[(i - 1)];
+      document.getElementById('cpfUser').value = salvaCpf[(i - 1)];
+      dadosLista.splice(dadosLista[(i - 1)], 1);
+  }
+   
+    // Remove o usuário da lista para permitir re-adicionar com alterações
+    dadosLista.splice(i - 1);
+    salvaEmail.splice(i - 1);
+    salvaCpf.splice(i - 1);
+  
+   
+  // Função para excluir um usuário da lista
+  function excluir(i){
+    // Remove o usuário da lista
+    document.getElementById('table').deleteRow(i + 1);
+    dadosLista.splice(i - 1);
+    salvaEmail.splice(i - 1);
+    salvacpf.splice(i - 1);
+  
+   
+    // Remove a linha correspondente da tabela
+    document.getElementById('table').deleteRow(i + 1); // +1 para ajustar o índice da tabela
+  }      
